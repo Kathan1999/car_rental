@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Samay Car Rental — Anand, Gujarat</title>
+<style>
+:root{
+  --ink:#1c1c1c; --ink-soft:#6b6b64; --paper:#f7f5ef; --panel:#fff;
+  --line:#e4ded0; --gold:#a9772f; --gold-deep:#8a5f23; --radius:12px;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:inherit;margin:0;padding:0;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;}
+a{color:inherit;text-decoration:none;} img{max-width:100%;display:block;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px;}
+h1,h2,h3{font-weight:700;letter-spacing:-.01em;}
+.btn{display:inline-block;font-weight:700;font-size:14px;padding:13px 22px;border-radius:100px;border:none;cursor:pointer;text-align:center;}
+.btn-gold{background:var(--gold);color:#fff;} .btn-gold:hover{background:var(--gold-deep);}
+.btn-line{background:none;border:1.5px solid var(--ink);color:var(--ink);}
+.muted{color:var(--ink-soft);font-size:14px;}
+section{padding:56px 0;} .section-head{max-width:560px;margin-bottom:28px;}
+.section-head h2{font-size:26px;} .section-head p{color:var(--ink-soft);font-size:14px;margin-top:6px;}
+.grid{display:grid;gap:16px;grid-template-columns:1fr;}
+@media(min-width:640px){.grid-2{grid-template-columns:1fr 1fr;} .grid-3{grid-template-columns:repeat(3,1fr);}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;}
+label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin:12px 0 5px;}
+input,select,textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink);}
+textarea{resize:vertical;min-height:70px;}
+.radio-row{display:flex;gap:16px;margin-top:6px;font-size:14px;}
+.radio-row label{display:flex;align-items:center;gap:6px;font-weight:400;color:var(--ink);margin:0;}
+.radio-row input{width:auto;}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(247,245,239,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;max-width:1080px;margin:0 auto;}
+.logo{font-size:18px;font-weight:800;} .logo span{color:var(--gold);}
+.navtoggle{background:none;border:none;} .navtoggle span{display:block;width:20px;height:2px;background:var(--ink);margin:5px 0;}
+.navlinks{display:none;} .navcta{display:none;}
+@media(min-width:860px){
+  .navtoggle{display:none;}
+  .navlinks{display:flex;gap:26px;font-size:14px;color:var(--ink-soft);}
+  .navcta{display:inline-block;}
+}
+.mobilemenu{display:none;flex-direction:column;padding:0 18px 14px;}
+.mobilemenu a{padding:10px 0;border-top:1px solid var(--line);font-size:14px;}
+.mobilemenu.open{display:flex;}
+
+.hero{padding:44px 0 28px;text-align:center;}
+.hero h1{font-size:34px;line-height:1.1;}
+.hero h1 span{color:var(--gold);}
+.hero .tag{font-size:16px;color:var(--ink-soft);margin-top:8px;}
+.hero p.sub{max-width:44ch;margin:14px auto 0;font-size:14px;color:var(--ink-soft);}
+.hero-ctas{display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap;}
+.hero-modes{margin-top:16px;font-size:12px;color:var(--ink-soft);}
+
+.why-icon{font-size:26px;} .why-card h3{font-size:15px;margin:10px 0 4px;} .why-card p{font-size:13px;color:var(--ink-soft);}
+
+.car-photo{aspect-ratio:16/10;border-radius:8px;background:linear-gradient(160deg,#eee6d3,#ddd0ab);display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:14px;}
+.car-card h3{font-size:17px;} .car-tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px;font-size:12px;color:var(--ink-soft);}
+.car-tags span{background:var(--paper);border:1px solid var(--line);padding:3px 9px;border-radius:100px;}
+.price-row{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:12px;margin-top:4px;}
+.price-row b{font-size:19px;} .price-row small{color:var(--ink-soft);font-weight:400;font-size:12px;}
+.car-extra{font-size:12px;color:var(--ink-soft);margin-top:8px;line-height:1.7;}
+.car-card .btn{width:100%;margin-top:14px;}
+.fleet-note{font-size:12px;color:var(--gold-deep);font-weight:600;margin-top:6px;}
+
+.band{background:var(--ink);color:#f3efe4;border-radius:var(--radius);padding:32px 22px;text-align:center;}
+.band h2{font-size:22px;} .band p{color:#cfcabf;font-size:14px;margin-top:8px;}
+.band .btn{margin-top:18px;}
+
+.steps{counter-reset:s;} .step{display:flex;gap:14px;padding:16px 0;border-top:1px solid var(--line);}
+.step:first-child{border-top:none;}
+.step .n{counter-increment:s;font-weight:800;color:var(--gold);font-size:14px;min-width:26px;}
+.step h3{font-size:15px;} .step p{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+
+.notice{background:#fbf3e4;border:1px solid #ecd9ad;border-radius:8px;padding:12px 14px;font-size:12.5px;color:#6b5320;margin-top:16px;}
+
+details{border-top:1px solid var(--line);padding:14px 0;}
+details:last-child{border-bottom:1px solid var(--line);}
+summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;}
+summary::-webkit-details-marker{display:none;}
+summary:after{content:"+";float:right;color:var(--gold);}
+details[open] summary:after{content:"–";}
+details p{font-size:13.5px;color:var(--ink-soft);margin-top:8px;}
+
+.contact-card{text-align:center;}
+.contact-card h2{font-size:22px;} .contact-card p{color:var(--ink-soft);font-size:14px;margin-top:4px;}
+.contact-ctas{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap;}
+
+footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size:13px;color:var(--ink-soft);}
+.foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.foot-links a{margin-right:12px;}
+
+/* ---- Animation ---- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+.hero h1{animation:fadeUp .7s ease both;}
+.hero .tag{animation:fadeUp .7s .1s ease both;}
+.hero p.sub{animation:fadeUp .7s .2s ease both;}
+.hero-ctas{animation:fadeUp .7s .3s ease both;}
+.hero-modes{animation:fadeUp .7s .4s ease both;}
+.car-card,.card,.why-card{transition:transform .25s ease,box-shadow .25s ease;}
+.car-card:hover,.why-card:hover{transform:translateY(-4px);box-shadow:0 16px 30px -22px rgba(28,28,28,.35);}
+.btn{transition:transform .15s ease,background .2s ease;}
+.btn:active{transform:scale(.97);}
+.btn-gold:hover{transform:translateY(-1px);}
+.logo span{display:inline-block;animation:floatY 3.2s ease-in-out infinite;}
+.price-band-num{transition:transform .2s ease;}
+.price-card:hover .price-band-num{transform:scale(1.05);}
+
+/* ---- Gallery ---- */
+.gallery-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
+.gallery-scroll::-webkit-scrollbar{height:6px;}
+.gallery-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+.gallery-item{flex:0 0 78%;scroll-snap-align:start;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);cursor:pointer;position:relative;background:var(--panel);}
+@media(min-width:640px){.gallery-item{flex:0 0 46%;}}
+@media(min-width:900px){.gallery-scroll{display:grid;grid-template-columns:repeat(3,1fr);overflow:visible;}.gallery-item{flex:none;}}
+.gallery-photo{aspect-ratio:4/3;background:linear-gradient(150deg,#efe7d4,#d9c9a0);display:flex;align-items:center;justify-content:center;font-size:52px;transition:transform .4s ease;}
+.gallery-item:hover .gallery-photo{transform:scale(1.06);}
+.gallery-cap{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(0deg,rgba(28,28,28,.72),transparent);color:#fff;font-size:13px;font-weight:600;}
+.lightbox{position:fixed;inset:0;background:rgba(20,18,14,.9);display:none;align-items:center;justify-content:center;z-index:100;padding:24px;}
+.lightbox.open{display:flex;}
+.lightbox-inner{max-width:520px;width:100%;background:var(--panel);border-radius:var(--radius);overflow:hidden;}
+.lightbox-photo{aspect-ratio:4/3;background:linear-gradient(150deg,#efe7d4,#d9c9a0);display:flex;align-items:center;justify-content:center;font-size:80px;}
+.lightbox-body{padding:16px;} .lightbox-close{position:absolute;top:18px;right:22px;color:#fff;font-size:26px;cursor:pointer;}
+
+/* ---- Pricing ---- */
+.price-hero{background:linear-gradient(135deg,var(--ink),#3a352b);color:#f3efe4;border-radius:var(--radius);padding:28px 22px;text-align:center;}
+.price-hero .range{font-size:30px;font-weight:800;color:#f0d9a8;margin-top:6px;}
+.price-hero .range small{font-size:14px;font-weight:400;color:#cfcabf;}
+.price-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;text-align:center;}
+.price-card .tag2{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;}
+.price-band-num{font-size:24px;font-weight:800;color:var(--gold-deep);margin:6px 0 2px;display:inline-block;}
+.price-card .cars-in{font-size:12px;color:var(--ink-soft);}
+
+/* ---- Reviews ---- */
+.review-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;height:100%;}
+.review-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:10px;}
+.review-quote{font-size:14px;color:var(--ink);line-height:1.7;flex:1;}
+.review-quote:before{content:"“";} .review-quote:after{content:"”";}
+.review-who{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);}
+.review-name{font-size:14px;font-weight:700;}
+.review-place{font-size:12px;color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Samay <span>Car Rental</span></div>
+    <div class="navlinks">
+      <a href="#cars">Our Cars</a><a href="#gallery">Gallery</a><a href="#pricing">Pricing</a><a href="#reviews">Reviews</a><a href="#how">How It Works</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+    </div>
+    <a class="navcta btn btn-gold" href="#book">Request a Booking</a>
+    <button class="navtoggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobilemenu" id="mobileMenu">
+    <a href="#cars">Our Cars</a><a href="#gallery">Gallery</a><a href="#pricing">Pricing</a><a href="#reviews">Reviews</a><a href="#how">How It Works</a><a href="#terms">Rental Terms</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><a href="#book">Request a Booking</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <h1>Samay <span>Car Rental</span></h1>
+    <div class="tag">Self-Drive Cars. Easy Booking. Reliable Travel.</div>
+    <p class="sub">Rent a car in Anand, Gujarat for your local, outstation, airport and long-distance trips.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-gold" href="#cars">View Cars</a>
+      <a class="btn btn-line" href="#book">Request a Booking</a>
+    </div>
+    <div class="hero-modes">Self-Drive &nbsp;|&nbsp; With Driver &nbsp;|&nbsp; Flexible Rental Options</div>
+  </section>
+
+  <section class="wrap">
+    <div class="section-head"><h2>Why Choose Samay Car Rental</h2></div>
+    <div class="grid grid-3" id="whyGrid">
+
+      <div class="card why-card">
+        <div class="why-icon">🧾</div>
+        <h3>Simple & Transparent Rental</h3>
+        <p>Clear daily pricing and kilometre limits.</p>
+      </div>
+
+      <div class="card why-card">
+        <div class="why-icon">🚘</div>
+        <h3>Wide Range of Cars</h3>
+        <p>Hatchbacks, sedans, SUVs and 7-seater cars.</p>
+      </div>
+
+      <div class="card why-card">
+        <div class="why-icon">🧑‍✈️</div>
+        <h3>Self-Drive or With Driver</h3>
+        <p>Choose the option that suits your trip.</p>
+      </div>
+
+      <div class="card why-card">
+        <div class="why-icon">☎️</div>
+        <h3>24/7 Support</h3>
+        <p>Support available during your rental.</p>
+      </div>
+
+      <div class="card why-card">
+        <div class="why-icon">🛠️</div>
+        <h3>Roadside Assistance</h3>
+        <p>Assistance available in case of issues during your trip.</p>
+      </div>
+
+      <div class="card why-card">
+        <div class="why-icon">📄</div>
+        <h3>Proper Documentation</h3>
+        <p>Rental agreement and required documentation for every confirmed booking.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="wrap" id="cars">
+    <div class="section-head"><h2>Choose Your Car</h2><p>Select your preferred car, rental dates and duration to send us a booking request.</p></div>
+    <div class="grid grid-3" id="carGrid">
+
+      <!-- ===== CAR CARD 1 — Suzuki Baleno ===== -->
+      <div class="car-card card">
+        <!-- Photo: replace the emoji below with <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+        <div class="car-photo">🚗</div>
+        <h3>Suzuki Baleno Delta</h3>
+        <div class="car-tags"><span>2026</span><span>Petrol / CNG</span><span>Manual</span><span>5 Seats</span></div>
+        <div class="price-row"><b>₹2,999</b><small>/24 hrs · 300 KM incl.</small></div>
+        <div class="car-extra">
+          Extra KM: ₹8/km · Driver: ₹500/day<br>
+          Long-term: 5–10 days ₹2,499/day · 10+ days ₹2,099/day<br>
+          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
+        </div>
+        <a class="btn btn-gold" href="#book" data-car="Suzuki Baleno" onclick="selectCar(this)">Request Booking</a>
+      </div>
+
+      <!-- ===== CAR CARD 2 — Suzuki Swift ===== -->
+      <div class="car-card card">
+        <div class="car-photo">🚗</div>
+        <h3>Suzuki Swift — Second Top Variant</h3>
+        <div class="car-tags"><span>2025</span><span>Petrol / CNG</span><span>Manual</span><span>5 Seats</span></div>
+        <div class="price-row"><b>₹2,999</b><small>/24 hrs · 300 KM incl.</small></div>
+        <div class="car-extra">
+          Extra KM: ₹8/km · Driver: ₹500/day<br>
+          Long-term: 5–10 days ₹2,499/day · 10+ days ₹2,099/day<br>
+          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
+        </div>
+        <a class="btn btn-gold" href="#book" data-car="Suzuki Swift" onclick="selectCar(this)">Request Booking</a>
+      </div>
+
+      <!-- ===== CAR CARD 3 — Suzuki Dzire ===== -->
+      <div class="car-card card">
+        <div class="car-photo">🚗</div>
+        <h3>Suzuki Dzire — Second Top Variant</h3>
+        <div class="car-tags"><span>2024</span><span>Petrol / CNG</span><span>Manual</span><span>5 Seats</span></div>
+        <div class="price-row"><b>₹2,999</b><small>/24 hrs · 300 KM incl.</small></div>
+        <div class="car-extra">
+          Extra KM: ₹8/km · Driver: ₹500/day<br>
+          Long-term: 5–10 days ₹2,499/day · 10+ days ₹2,099/day<br>
+          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
+        </div>
+        <a class="btn btn-gold" href="#book" data-car="Suzuki Dzire" onclick="selectCar(this)">Request Booking</a>
+      </div>
+
+      <!-- ===== CAR CARD 4 — Suzuki Ertiga ===== -->
+      <div class="car-card card">
+        <div class="car-photo">🚐</div>
+        <h3>Suzuki Ertiga ZXI</h3>
+        <div class="car-tags"><span>2025</span><span>Petrol / CNG</span><span>Manual</span><span>7 Seats</span></div>
+        <div class="fleet-note">4 Cars Available</div>
+        <div class="price-row"><b>₹3,499</b><small>/24 hrs · 300 KM incl.</small></div>
+        <div class="car-extra">
+          Extra KM: ₹11/km · Driver: ₹500/day<br>
+          Long-term: 5–10 days ₹2,999/day · 10+ days ₹2,499/day<br>
+          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
+        </div>
+        <a class="btn btn-gold" href="#book" data-car="Suzuki Ertiga" onclick="selectCar(this)">Request Booking</a>
+      </div>
+
+      <!-- ===== CAR CARD 5 — Mahindra Thar ===== -->
+      <div class="car-card card">
+        <div class="car-photo">🚙</div>
+        <h3>Mahindra Thar 4x2</h3>
+        <div class="car-tags"><span>2024</span><span>Diesel</span><span>Manual</span><span>5 Seats</span></div>
+        <div class="price-row"><b>₹5,999</b><small>/24 hrs · 300 KM incl.</small></div>
+        <div class="car-extra">
+          Extra KM: ₹14/km · Driver: ₹500/day<br>
+          Long-term: 5–10 days ₹4,999/day · 10+ days ₹4,499/day<br>
+          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
+        </div>
+        <a class="btn btn-gold" href="#book" data-car="Mahindra Thar" onclick="selectCar(this)">Request Booking</a>
+      </div>
+
+      <!-- ===== CAR CARD 6 — Hyundai Verna ===== -->
+      <div class="car-card card">
+        <div class="car-photo">🚘</div>
+        <h3>Hyundai Verna — Top Variant</h3>
+        <div class="car-tags"><span>2023</span><span>Diesel</span><span>Automatic</span><span>5 Seats</span></div>
+        <div class="price-row"><b>₹5,999</b><small>/24 hrs · 300 KM incl.</small></div>
+        <div class="car-extra">
+          Extra KM: ₹14/km · Driver: ₹500/day<br>
+          Long-term: 5–10 days ₹4,999/day · 10+ days ₹4,499/day<br>
+          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
+        </div>
+        <a class="btn btn-gold" href="#book" data-car="Hyundai Verna" onclick="selectCar(this)">Request Booking</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="wrap reveal" id="gallery">
+    <div class="section-head"><h2>Our Cars — Photo Gallery</h2><p>A quick look at the fleet. Tap any photo to view larger.</p></div>
+    <div class="gallery-scroll" id="galleryScroll">
+
+      <!-- ===== GALLERY ITEM 1 ===== -->
+      <!-- Replace the emoji div below with <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;"> to use a real photo -->
+      <div class="gallery-item" onclick="openLightbox('🚗','Suzuki Baleno Delta')">
+        <div class="gallery-photo">🚗</div>
+        <div class="gallery-cap">Suzuki Baleno Delta</div>
+      </div>
+
+      <!-- ===== GALLERY ITEM 2 ===== -->
+      <div class="gallery-item" onclick="openLightbox('🚗','Suzuki Swift')">
+        <div class="gallery-photo">🚗</div>
+        <div class="gallery-cap">Suzuki Swift</div>
+      </div>
+
+      <!-- ===== GALLERY ITEM 3 ===== -->
+      <div class="gallery-item" onclick="openLightbox('🚗','Suzuki Dzire')">
+        <div class="gallery-photo">🚗</div>
+        <div class="gallery-cap">Suzuki Dzire</div>
+      </div>
+
+      <!-- ===== GALLERY ITEM 4 ===== -->
+      <div class="gallery-item" onclick="openLightbox('🚐','Suzuki Ertiga ZXI')">
+        <div class="gallery-photo">🚐</div>
+        <div class="gallery-cap">Suzuki Ertiga ZXI</div>
+      </div>
+
+      <!-- ===== GALLERY ITEM 5 ===== -->
+      <div class="gallery-item" onclick="openLightbox('🚙','Mahindra Thar 4x2')">
+        <div class="gallery-photo">🚙</div>
+        <div class="gallery-cap">Mahindra Thar 4x2</div>
+      </div>
+
+      <!-- ===== GALLERY ITEM 6 ===== -->
+      <div class="gallery-item" onclick="openLightbox('🚘','Hyundai Verna')">
+        <div class="gallery-photo">🚘</div>
+        <div class="gallery-cap">Hyundai Verna</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="wrap reveal" id="pricing">
+    <div class="section-head"><h2>Price Range</h2><p>Straightforward 24-hour pricing across the fleet — no hidden charges.</p></div>
+    <div class="price-hero" style="margin-bottom:16px;">
+      <div class="tag2" style="color:#cfcabf;font-size:12px;text-transform:uppercase;letter-spacing:.06em;">24-Hour Rental</div>
+      <div class="range">₹2,999 <small>–</small> ₹5,999 <small>/ day</small></div>
+      <div style="font-size:13px;color:#cfcabf;margin-top:6px;">300 KM included every day · extra KM billed per vehicle</div>
+    </div>
+    <div class="grid grid-3" id="priceGrid">
+
+      <!-- ===== PRICE CARD 1 ===== -->
+      <div class="price-card">
+        <div class="tag2">Hatchback</div>
+        <div class="price-band-num">₹2,999<span style="font-size:13px;font-weight:400;color:var(--ink-soft);">/day</span></div>
+        <div class="cars-in">Suzuki Baleno · Suzuki Swift · Suzuki Dzire</div>
+      </div>
+
+      <!-- ===== PRICE CARD 2 ===== -->
+      <div class="price-card">
+        <div class="tag2">7-Seater MUV</div>
+        <div class="price-band-num">₹3,499<span style="font-size:13px;font-weight:400;color:var(--ink-soft);">/day</span></div>
+        <div class="cars-in">Suzuki Ertiga</div>
+      </div>
+
+      <!-- ===== PRICE CARD 3 ===== -->
+      <div class="price-card">
+        <div class="tag2">SUV / Premium</div>
+        <div class="price-band-num">₹5,999<span style="font-size:13px;font-weight:400;color:var(--ink-soft);">/day</span></div>
+        <div class="cars-in">Mahindra Thar · Hyundai Verna</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="wrap reveal" id="reviews">
+    <div class="section-head"><h2>What Our Customers Say</h2><p>Real feedback from renters across Anand and nearby.</p></div>
+    <div class="grid grid-3">
+
+      <!-- ===== REVIEW 1 ===== -->
+       {% for review in reviews %}
+      <div class="review-card">
+        <div class="review-stars">{{review.rating}}</div>
+        <div class="review-quote">{{review.description}}</div>
+        <div class="review-who">
+          <div class="review-name">{{review.fullname}}</div>
+          <div class="review-place">{{review.place}}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  <br>
+  <br>
+
+  <section class="wrap">
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="font-size:17px;">Can't find the car you're looking for?</h3>
+        <p class="muted" style="margin-top:6px;">Select <b>Other Requirement</b> and tell us the car name/model you need — we'll check availability and get back with pricing.</p>
+        <form id="otherForm">
+          <label>Car / Model Required</label><input required name="model" placeholder="e.g. Toyota Innova">
+          <div class="grid grid-2" style="gap:10px;">
+            <div><label>Pickup Date</label><input type="date" required name="pickup"></div>
+            <div><label>Return Date</label><input type="date" required name="return"></div>
+          </div>
+          <label>Rental Type</label>
+          <div class="radio-row"><label><input type="radio" name="type" value="Self-Drive" checked>Self-Drive</label><label><input type="radio" name="type" value="With Driver">With Driver</label></div>
+          <label>Your Name</label><input required name="name">
+          <label>WhatsApp Number</label><input required name="whatsapp" type="tel">
+          <label>Additional Requirements</label><textarea name="notes"></textarea>
+          <button class="btn btn-gold" style="width:100%;margin-top:16px;">Send Inquiry</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:17px;">Cars for Weddings &amp; Special Events</h3>
+        <p class="muted" style="margin-top:6px;">Looking for a premium or special car for a wedding, reception or engagement? We have options beyond our regular fleet — shared directly on WhatsApp.</p>
+        <form id="weddingForm">
+          <label>Event Date</label><input type="date" required name="eventDate">
+          <label>Event Type</label>
+          <select name="eventType"><option>Wedding</option><option>Reception</option><option>Engagement</option><option>Other</option></select>
+          <label>Car Requirement</label><input required name="car" placeholder="e.g. Luxury sedan">
+          <label>With Driver</label>
+          <div class="radio-row"><label><input type="radio" name="withDriver" value="Yes" checked>Yes</label><label><input type="radio" name="withDriver" value="No">No</label></div>
+          <label>Customer Name</label><input required name="name">
+          <label>WhatsApp Number</label><input required name="whatsapp" type="tel">
+          <label>Location</label><input name="location">
+          <label>Additional Details</label><textarea name="notes"></textarea>
+          <button class="btn btn-gold" style="width:100%;margin-top:16px;">Send Inquiry</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="how">
+    <div class="section-head"><h2>How It Works</h2></div>
+    <div class="steps" id="stepsList">
+
+      <div class="step"><div class="n">1</div><div><h3>Choose Your Car</h3><p>Select the car you are interested in.</p></div></div>
+
+      <div class="step"><div class="n">2</div><div><h3>Select Your Dates</h3><p>Choose pickup and return date and time.</p></div></div>
+
+      <div class="step"><div class="n">3</div><div><h3>Send Booking Request</h3><p>Enter your contact and trip details.</p></div></div>
+
+      <div class="step"><div class="n">4</div><div><h3>We Check Availability</h3><p>Our team manually checks the actual vehicle availability for your requested dates.</p></div></div>
+
+      <div class="step"><div class="n">5</div><div><h3>Confirmation</h3><p>Once availability is confirmed, we contact you and proceed with the booking.</p></div></div>
+
+      <div class="step"><div class="n">6</div><div><h3>Payment & Documentation</h3><p>Advance payment and rental documentation are completed before the booking is confirmed.</p></div></div>
+
+    </div>
+  </section>
+
+  <section class="wrap" id="book">
+    <div class="section-head"><h2>Request Your Car</h2></div>
+    <form class="card" id="bookingForm">
+      <label>Select Car</label>
+      <select name="car" id="carSelect">
+        <option>Suzuki Baleno</option><option>Suzuki Swift</option><option>Suzuki Dzire</option><option>Suzuki Ertiga</option><option>Mahindra Thar</option><option>Hyundai Verna</option><option>Other Requirement</option><option>Wedding / Event Car</option>
+      </select>
+      <label>Rental Type</label>
+      <div class="radio-row"><label><input type="radio" name="type" value="Self-Drive" checked>Self-Drive</label><label><input type="radio" name="type" value="With Driver">With Driver</label></div>
+      <div class="grid grid-2" style="gap:10px;">
+        <div><label>Pickup Date</label><input type="date" required name="pickupDate"></div>
+        <div><label>Pickup Time</label><input type="time" required name="pickupTime"></div>
+        <div><label>Return Date</label><input type="date" required name="returnDate"></div>
+        <div><label>Return Time</label><input type="time" required name="returnTime"></div>
+      </div>
+      <div class="grid grid-2" style="gap:10px;">
+        <div><label>Pickup Location</label><input required name="pickupLoc"></div>
+        <div><label>Return / Drop Location</label><input required name="returnLoc"></div>
+      </div>
+      <div class="grid grid-2" style="gap:10px;">
+        <div><label>Full Name</label><input required name="name"></div>
+        <div><label>WhatsApp Number</label><input required name="whatsapp" type="tel"></div>
+      </div>
+      <div class="grid grid-2" style="gap:10px;">
+        <div><label>Email</label><input type="email" name="email"></div>
+        <div><label>Number of Passengers</label><input type="number" min="1" name="passengers"></div>
+      </div>
+      <label>Additional Message</label><textarea name="notes"></textarea>
+      <div class="notice">Booking requests are not automatically confirmed. Vehicle availability will be manually checked by Samay Car Rental before final confirmation.</div>
+      <button class="btn btn-gold" style="width:100%;margin-top:16px;">Send Booking Request</button>
+    </form>
+  </section>
+
+  <section class="wrap" id="terms">
+    <div class="section-head"><h2>Rental Terms</h2></div>
+    <ul style="font-size:13.5px;color:var(--ink-soft);padding-left:18px;line-height:1.9;">
+      <li>Rental duration is calculated based on the selected rental period.</li>
+      <li>Standard daily rental includes the specified kilometres for each vehicle; extra KM billed per vehicle's rate.</li>
+      <li>Self-drive and driver options available depending on requirement; driver charges are separate.</li>
+      <li>Final vehicle availability must be confirmed by Samay Car Rental.</li>
+      <li>A rental agreement/documentation is completed for confirmed bookings.</li>
+      <li>Customers are responsible for the vehicle during the rental period as per the agreement.</li>
+      <li>Pickup/drop arrangements can be discussed during booking.</li>
+    </ul>
+  </section>
+
+  <section class="wrap" id="faq">
+    <div class="section-head"><h2>FAQ</h2></div>
+    <div id="faqList">
+
+      <details>
+        <summary>Are the cars available for self-drive?</summary>
+        <p>Yes. Self-drive is available for the listed vehicles, subject to eligibility and documentation.</p>
+      </details>
+
+      <details>
+        <summary>Can I rent a car with a driver?</summary>
+        <p>Yes. Driver service is available at an additional charge of ₹500/day.</p>
+      </details>
+
+      <details>
+        <summary>Is the booking confirmed immediately after submitting the form?</summary>
+        <p>No. The request is first checked for actual vehicle availability. Final confirmation is done by Samay Car Rental.</p>
+      </details>
+
+      <details>
+        <summary>How many kilometres are included?</summary>
+        <p>The standard package includes 300 KM per day. Additional kilometres are charged according to the selected car.</p>
+      </details>
+
+      <details>
+        <summary>Do NRI customers need a security deposit?</summary>
+        <p>For the listed rental terms, no security deposit is required for NRI customers.</p>
+      </details>
+
+      <details>
+        <summary>What is required from Indian customers?</summary>
+        <p>A two-wheeler and its RC book are required as security, subject to the rental agreement.</p>
+      </details>
+
+      <details>
+        <summary>Do you provide cars for weddings?</summary>
+        <p>Yes. Separate wedding and special-event cars are available. Submit an inquiry and our team will share options and pricing on WhatsApp.</p>
+      </details>
+
+      <details>
+        <summary>Can I request a car that is not listed?</summary>
+        <p>Yes. Select Other Requirement and enter the car/model you need.</p>
+      </details>
+
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="band">
+      <h2>Ready to hit the road?</h2>
+      <p>Anand, Gujarat · WhatsApp / Call: 8401297667</p>
+      <a class="btn btn-gold" href="#book">Request a Booking</a>
+    </div>
+  </section>
+
+  <section class="wrap" id="contact">
+    <div class="card contact-card">
+      <h2>Samay Car Rental</h2>
+      <p>Self-Drive &amp; With-Driver Car Rental · Anand, Gujarat</p>
+      <div class="contact-ctas">
+        <a class="btn btn-gold" id="waContact" href="#" target="_blank">WhatsApp Us</a>
+        <a class="btn btn-line" href="#book">Request a Booking</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div>
+        <b style="color:var(--ink);">Samay Car Rental</b>
+        <div class="muted" style="margin-top:4px;">Self-Drive | With Driver | Local | Outstation | Airport</div>
+      </div>
+      <div class="foot-links">
+        <a href="#cars">Our Cars</a><a href="#how">How It Works</a><a href="#terms">Terms</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="muted" style="margin-top:16px;">WhatsApp: 8401297667 · © 2026 Samay Car Rental. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<!-- ===== LIGHTBOX (used by Photo Gallery) — do not remove, JS shows/hides it ===== -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this) closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <div class="lightbox-inner">
+    <div class="lightbox-photo" id="lbPhoto"></div>
+    <div class="lightbox-body"><h3 id="lbName" style="font-size:16px;"></h3></div>
+  </div>
+</div>
+
+<script>
+/* ===================================================================
+   This script ONLY handles behaviour (menu, lightbox, form-to-WhatsApp,
+   scroll animation). It does NOT generate any cards, text or content —
+   all of that lives directly in the HTML above so you can edit it there.
+   =================================================================== */
+
+const WA = "918401297667"; // <-- change your WhatsApp number here
+function waLink(msg){ return `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`; }
+document.getElementById('waContact').href = waLink("Hi Samay Car Rental, I'd like to know more about your cars.");
+
+// Clicking "Request Booking" on a car card scrolls to the booking form
+// and pre-selects that car in the dropdown.
+function selectCar(link){
+  const carName = link.dataset.car;
+  const sel = document.getElementById('carSelect');
+  for(const o of sel.options){ if(carName.startsWith(o.value) || o.value.startsWith(carName)){ sel.value = o.value; break; } }
+}
+
+// Gallery lightbox: opens a larger view of whichever photo was clicked.
+function openLightbox(photo, name){
+  const lb = document.getElementById('lightbox');
+  const lbPhoto = document.getElementById('lbPhoto');
+  lbPhoto.textContent = photo;
+  document.getElementById('lbName').textContent = name;
+  lb.classList.add('open');
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+
+function val(form,name){ return form.querySelector(`[name="${name}"]`)?.value || ''; }
+
+document.getElementById('bookingForm').addEventListener('submit', e=>{
+  e.preventDefault(); const f = e.target;
+  const msg = `🚗 NEW BOOKING INQUIRY — SAMAY CAR RENTAL
+
+Customer Name: ${val(f,'name')}
+WhatsApp: ${val(f,'whatsapp')}
+Email: ${val(f,'email')}
+
+Car: ${val(f,'car')}
+Rental Type: ${val(f,'type')}
+
+Pickup: ${val(f,'pickupDate')} ${val(f,'pickupTime')}
+Return: ${val(f,'returnDate')} ${val(f,'returnTime')}
+
+Pickup Location: ${val(f,'pickupLoc')}
+Return Location: ${val(f,'returnLoc')}
+Passengers: ${val(f,'passengers')}
+
+Message: ${val(f,'notes')}
+
+Status: Pending Availability Confirmation`;
+  window.open(waLink(msg), '_blank');
+});
+
+document.getElementById('otherForm').addEventListener('submit', e=>{
+  e.preventDefault(); const f = e.target;
+  const msg = `🚗 OTHER CAR REQUIREMENT — SAMAY CAR RENTAL
+
+Car/Model Required: ${val(f,'model')}
+Pickup: ${val(f,'pickup')}  Return: ${val(f,'return')}
+Rental Type: ${val(f,'type')}
+Name: ${val(f,'name')}
+WhatsApp: ${val(f,'whatsapp')}
+Additional Requirements: ${val(f,'notes')}`;
+  window.open(waLink(msg), '_blank');
+});
+
+document.getElementById('weddingForm').addEventListener('submit', e=>{
+  e.preventDefault(); const f = e.target;
+  const msg = `💐 WEDDING / EVENT CAR INQUIRY — SAMAY CAR RENTAL
+
+Event Date: ${val(f,'eventDate')}
+Event Type: ${val(f,'eventType')}
+Car Requirement: ${val(f,'car')}
+With Driver: ${val(f,'withDriver')}
+Name: ${val(f,'name')}
+WhatsApp: ${val(f,'whatsapp')}
+Location: ${val(f,'location')}
+Additional Details: ${val(f,'notes')}`;
+  window.open(waLink(msg), '_blank');
+});
+
+// ---- Scroll reveal: fades in any element with class="reveal" as it enters view ----
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+},{threshold:.12});
+document.querySelectorAll('.reveal, .why-card, .car-card, .review-card').forEach((el,i)=>{
+  el.classList.add('reveal'); el.style.transitionDelay = (i%3)*0.08+'s'; io.observe(el);
+});
+
+const navToggle = document.getElementById('navToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+navToggle.addEventListener('click', ()=>mobileMenu.classList.toggle('open'));
+mobileMenu.addEventListener('click', e=>{ if(e.target.tagName==='A') mobileMenu.classList.remove('open'); });
+</script>
+</body>
+</html>
