@@ -222,93 +222,22 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
     <div class="grid grid-3" id="carGrid">
 
       <!-- ===== CAR CARD 1 — Suzuki Baleno ===== -->
+       {% for cardescription in cardescriptions %}
       <div class="car-card card">
         <!-- Photo: replace the emoji below with <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
         <div class="car-photo">🚗</div>
-        <h3>Suzuki Baleno Delta</h3>
-        <div class="car-tags"><span>2026</span><span>Petrol / CNG</span><span>Manual</span><span>5 Seats</span></div>
-        <div class="price-row"><b>₹2,999</b><small>/24 hrs · 300 KM incl.</small></div>
+        <h3>{{cardescription.title}}</h3>
+        <div class="car-tags"><span>{{cardescription.year}}</span><span>{{cardescription.fuel_type}}</span><span>{{cardescription.gair}}</span><span>{{cardescription.seats_type}}</span></div>
+        <div class="price-row"><b>₹{{cardescription.price}}</b><small>{{cardescription.km}}</small></div>
         <div class="car-extra">
-          Extra KM: ₹8/km · Driver: ₹500/day<br>
-          Long-term: 5–10 days ₹2,499/day · 10+ days ₹2,099/day<br>
-          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
+         {{cardescription.description}}
         </div>
         <a class="btn btn-gold" href="#book" data-car="Suzuki Baleno" onclick="selectCar(this)">Request Booking</a>
       </div>
-
-      <!-- ===== CAR CARD 2 — Suzuki Swift ===== -->
-      <div class="car-card card">
-        <div class="car-photo">🚗</div>
-        <h3>Suzuki Swift — Second Top Variant</h3>
-        <div class="car-tags"><span>2025</span><span>Petrol / CNG</span><span>Manual</span><span>5 Seats</span></div>
-        <div class="price-row"><b>₹2,999</b><small>/24 hrs · 300 KM incl.</small></div>
-        <div class="car-extra">
-          Extra KM: ₹8/km · Driver: ₹500/day<br>
-          Long-term: 5–10 days ₹2,499/day · 10+ days ₹2,099/day<br>
-          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
-        </div>
-        <a class="btn btn-gold" href="#book" data-car="Suzuki Swift" onclick="selectCar(this)">Request Booking</a>
-      </div>
-
-      <!-- ===== CAR CARD 3 — Suzuki Dzire ===== -->
-      <div class="car-card card">
-        <div class="car-photo">🚗</div>
-        <h3>Suzuki Dzire — Second Top Variant</h3>
-        <div class="car-tags"><span>2024</span><span>Petrol / CNG</span><span>Manual</span><span>5 Seats</span></div>
-        <div class="price-row"><b>₹2,999</b><small>/24 hrs · 300 KM incl.</small></div>
-        <div class="car-extra">
-          Extra KM: ₹8/km · Driver: ₹500/day<br>
-          Long-term: 5–10 days ₹2,499/day · 10+ days ₹2,099/day<br>
-          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
-        </div>
-        <a class="btn btn-gold" href="#book" data-car="Suzuki Dzire" onclick="selectCar(this)">Request Booking</a>
-      </div>
-
-      <!-- ===== CAR CARD 4 — Suzuki Ertiga ===== -->
-      <div class="car-card card">
-        <div class="car-photo">🚐</div>
-        <h3>Suzuki Ertiga ZXI</h3>
-        <div class="car-tags"><span>2025</span><span>Petrol / CNG</span><span>Manual</span><span>7 Seats</span></div>
-        <div class="fleet-note">4 Cars Available</div>
-        <div class="price-row"><b>₹3,499</b><small>/24 hrs · 300 KM incl.</small></div>
-        <div class="car-extra">
-          Extra KM: ₹11/km · Driver: ₹500/day<br>
-          Long-term: 5–10 days ₹2,999/day · 10+ days ₹2,499/day<br>
-          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
-        </div>
-        <a class="btn btn-gold" href="#book" data-car="Suzuki Ertiga" onclick="selectCar(this)">Request Booking</a>
-      </div>
-
-      <!-- ===== CAR CARD 5 — Mahindra Thar ===== -->
-      <div class="car-card card">
-        <div class="car-photo">🚙</div>
-        <h3>Mahindra Thar 4x2</h3>
-        <div class="car-tags"><span>2024</span><span>Diesel</span><span>Manual</span><span>5 Seats</span></div>
-        <div class="price-row"><b>₹5,999</b><small>/24 hrs · 300 KM incl.</small></div>
-        <div class="car-extra">
-          Extra KM: ₹14/km · Driver: ₹500/day<br>
-          Long-term: 5–10 days ₹4,999/day · 10+ days ₹4,499/day<br>
-          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
-        </div>
-        <a class="btn btn-gold" href="#book" data-car="Mahindra Thar" onclick="selectCar(this)">Request Booking</a>
-      </div>
-
-      <!-- ===== CAR CARD 6 — Hyundai Verna ===== -->
-      <div class="car-card card">
-        <div class="car-photo">🚘</div>
-        <h3>Hyundai Verna — Top Variant</h3>
-        <div class="car-tags"><span>2023</span><span>Diesel</span><span>Automatic</span><span>5 Seats</span></div>
-        <div class="price-row"><b>₹5,999</b><small>/24 hrs · 300 KM incl.</small></div>
-        <div class="car-extra">
-          Extra KM: ₹14/km · Driver: ₹500/day<br>
-          Long-term: 5–10 days ₹4,999/day · 10+ days ₹4,499/day<br>
-          NRI: no deposit · Indian customers: 2-wheeler + RC book as security
-        </div>
-        <a class="btn btn-gold" href="#book" data-car="Hyundai Verna" onclick="selectCar(this)">Request Booking</a>
-      </div>
-
+      {% endfor %}
     </div>
   </section>
+  <br>
 
   <section class="wrap reveal" id="gallery">
     <div class="section-head"><h2>Our Cars — Photo Gallery</h2><p>A quick look at the fleet. Tap any photo to view larger.</p></div>
@@ -316,76 +245,40 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
 
       <!-- ===== GALLERY ITEM 1 ===== -->
       <!-- Replace the emoji div below with <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;"> to use a real photo -->
-      <div class="gallery-item" onclick="openLightbox('🚗','Suzuki Baleno Delta')">
-        <div class="gallery-photo">🚗</div>
-        <div class="gallery-cap">Suzuki Baleno Delta</div>
+      {% for gallery in gallerys %}
+      <div class="gallery-item">
+        <div class="gallery-photo"><img src="{{gallery.image.url}}" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="gallery-cap">{{gallery.title}}</div>
       </div>
-
-      <!-- ===== GALLERY ITEM 2 ===== -->
-      <div class="gallery-item" onclick="openLightbox('🚗','Suzuki Swift')">
-        <div class="gallery-photo">🚗</div>
-        <div class="gallery-cap">Suzuki Swift</div>
-      </div>
-
-      <!-- ===== GALLERY ITEM 3 ===== -->
-      <div class="gallery-item" onclick="openLightbox('🚗','Suzuki Dzire')">
-        <div class="gallery-photo">🚗</div>
-        <div class="gallery-cap">Suzuki Dzire</div>
-      </div>
-
-      <!-- ===== GALLERY ITEM 4 ===== -->
-      <div class="gallery-item" onclick="openLightbox('🚐','Suzuki Ertiga ZXI')">
-        <div class="gallery-photo">🚐</div>
-        <div class="gallery-cap">Suzuki Ertiga ZXI</div>
-      </div>
-
-      <!-- ===== GALLERY ITEM 5 ===== -->
-      <div class="gallery-item" onclick="openLightbox('🚙','Mahindra Thar 4x2')">
-        <div class="gallery-photo">🚙</div>
-        <div class="gallery-cap">Mahindra Thar 4x2</div>
-      </div>
-
-      <!-- ===== GALLERY ITEM 6 ===== -->
-      <div class="gallery-item" onclick="openLightbox('🚘','Hyundai Verna')">
-        <div class="gallery-photo">🚘</div>
-        <div class="gallery-cap">Hyundai Verna</div>
-      </div>
+      {% endfor %}
 
     </div>
   </section>
+  <br>
 
   <section class="wrap reveal" id="pricing">
     <div class="section-head"><h2>Price Range</h2><p>Straightforward 24-hour pricing across the fleet — no hidden charges.</p></div>
+    {% for pricerange in priceranges %}
     <div class="price-hero" style="margin-bottom:16px;">
-      <div class="tag2" style="color:#cfcabf;font-size:12px;text-transform:uppercase;letter-spacing:.06em;">24-Hour Rental</div>
-      <div class="range">₹2,999 <small>–</small> ₹5,999 <small>/ day</small></div>
-      <div style="font-size:13px;color:#cfcabf;margin-top:6px;">300 KM included every day · extra KM billed per vehicle</div>
+      <div class="tag2" style="color:#cfcabf;font-size:12px;text-transform:uppercase;letter-spacing:.06em;">{{pricerange.total_hours}}</div>
+      <div class="range">₹{{pricerange.price_from}} <small>–</small> ₹{{pricerange.price_to}} <small>{{pricerange.total_days}}</small></div>
+      <div style="font-size:13px;color:#cfcabf;margin-top:6px;">{{pricerange.description}}</div>
     </div>
+    {% endfor %}
     <div class="grid grid-3" id="priceGrid">
 
       <!-- ===== PRICE CARD 1 ===== -->
+      {% for cartype in cartypes %}
       <div class="price-card">
-        <div class="tag2">Hatchback</div>
-        <div class="price-band-num">₹2,999<span style="font-size:13px;font-weight:400;color:var(--ink-soft);">/day</span></div>
-        <div class="cars-in">Suzuki Baleno · Suzuki Swift · Suzuki Dzire</div>
+        <div class="tag2">{{cartype.title}}</div>
+        <div class="price-band-num">₹{{cartype.price}}<span style="font-size:13px;font-weight:400;color:var(--ink-soft);">{{cartype.days}}</span></div>
+        <div class="cars-in">{{cartype.description}}</div>
       </div>
-
-      <!-- ===== PRICE CARD 2 ===== -->
-      <div class="price-card">
-        <div class="tag2">7-Seater MUV</div>
-        <div class="price-band-num">₹3,499<span style="font-size:13px;font-weight:400;color:var(--ink-soft);">/day</span></div>
-        <div class="cars-in">Suzuki Ertiga</div>
-      </div>
-
-      <!-- ===== PRICE CARD 3 ===== -->
-      <div class="price-card">
-        <div class="tag2">SUV / Premium</div>
-        <div class="price-band-num">₹5,999<span style="font-size:13px;font-weight:400;color:var(--ink-soft);">/day</span></div>
-        <div class="cars-in">Mahindra Thar · Hyundai Verna</div>
-      </div>
+      {% endfor %}
 
     </div>
   </section>
+  <br>
 
   <section class="wrap reveal" id="reviews">
     <div class="section-head"><h2>What Our Customers Say</h2><p>Real feedback from renters across Anand and nearby.</p></div>
