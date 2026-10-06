@@ -225,7 +225,7 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
        {% for cardescription in cardescriptions %}
       <div class="car-card card">
         <!-- Photo: replace the emoji below with <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
-        <div class="car-photo">🚗</div>
+        <div class="car-photo"> <img src="{{cardescription.image.url}}" style="width:100%;height:100%;object-fit:cover;"></div>
         <h3>{{cardescription.title}}</h3>
         <div class="car-tags"><span>{{cardescription.year}}</span><span>{{cardescription.fuel_type}}</span><span>{{cardescription.gair}}</span><span>{{cardescription.seats_type}}</span></div>
         <div class="price-row"><b>₹{{cardescription.price}}</b><small>{{cardescription.km}}</small></div>

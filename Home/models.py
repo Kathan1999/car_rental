@@ -13,6 +13,7 @@ class Review(models.Model):
 
 class CarDescription(models.Model):
     title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='gallery/', blank=True, null=True)
     year = models.PositiveBigIntegerField()
     fuel_type = models.CharField(max_length=50)
     gair = models.CharField(max_length=50)
