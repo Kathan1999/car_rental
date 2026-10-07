@@ -305,7 +305,8 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
       <div class="card">
         <h3 style="font-size:17px;">Can't find the car you're looking for?</h3>
         <p class="muted" style="margin-top:6px;">Select <b>Other Requirement</b> and tell us the car name/model you need — we'll check availability and get back with pricing.</p>
-        <form id="otherForm">
+        <form id="otherForm" method="POST" action="/">
+          {% csrf_token %}
           <label>Car / Model Required</label><input required name="model" placeholder="e.g. Toyota Innova">
           <div class="grid grid-2" style="gap:10px;">
             <div><label>Pickup Date</label><input type="date" required name="pickup"></div>
@@ -503,10 +504,6 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
    all of that lives directly in the HTML above so you can edit it there.
    =================================================================== */
 
-const WA = "918401297667"; // <-- change your WhatsApp number here
-function waLink(msg){ return `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`; }
-document.getElementById('waContact').href = waLink("Hi Samay Car Rental, I'd like to know more about your cars.");
-
 // Clicking "Request Booking" on a car card scrolls to the booking form
 // and pre-selects that car in the dropdown.
 function selectCar(link){
@@ -524,60 +521,6 @@ function openLightbox(photo, name){
   lb.classList.add('open');
 }
 function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
-
-function val(form,name){ return form.querySelector(`[name="${name}"]`)?.value || ''; }
-
-document.getElementById('bookingForm').addEventListener('submit', e=>{
-  e.preventDefault(); const f = e.target;
-  const msg = `🚗 NEW BOOKING INQUIRY — SAMAY CAR RENTAL
-
-Customer Name: ${val(f,'name')}
-WhatsApp: ${val(f,'whatsapp')}
-Email: ${val(f,'email')}
-
-Car: ${val(f,'car')}
-Rental Type: ${val(f,'type')}
-
-Pickup: ${val(f,'pickupDate')} ${val(f,'pickupTime')}
-Return: ${val(f,'returnDate')} ${val(f,'returnTime')}
-
-Pickup Location: ${val(f,'pickupLoc')}
-Return Location: ${val(f,'returnLoc')}
-Passengers: ${val(f,'passengers')}
-
-Message: ${val(f,'notes')}
-
-Status: Pending Availability Confirmation`;
-  window.open(waLink(msg), '_blank');
-});
-
-document.getElementById('otherForm').addEventListener('submit', e=>{
-  e.preventDefault(); const f = e.target;
-  const msg = `🚗 OTHER CAR REQUIREMENT — SAMAY CAR RENTAL
-
-Car/Model Required: ${val(f,'model')}
-Pickup: ${val(f,'pickup')}  Return: ${val(f,'return')}
-Rental Type: ${val(f,'type')}
-Name: ${val(f,'name')}
-WhatsApp: ${val(f,'whatsapp')}
-Additional Requirements: ${val(f,'notes')}`;
-  window.open(waLink(msg), '_blank');
-});
-
-document.getElementById('weddingForm').addEventListener('submit', e=>{
-  e.preventDefault(); const f = e.target;
-  const msg = `💐 WEDDING / EVENT CAR INQUIRY — SAMAY CAR RENTAL
-
-Event Date: ${val(f,'eventDate')}
-Event Type: ${val(f,'eventType')}
-Car Requirement: ${val(f,'car')}
-With Driver: ${val(f,'withDriver')}
-Name: ${val(f,'name')}
-WhatsApp: ${val(f,'whatsapp')}
-Location: ${val(f,'location')}
-Additional Details: ${val(f,'notes')}`;
-  window.open(waLink(msg), '_blank');
-});
 
 // ---- Scroll reveal: fades in any element with class="reveal" as it enters view ----
 const io = new IntersectionObserver(entries=>{

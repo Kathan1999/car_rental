@@ -51,4 +51,16 @@ class CarType(models.Model):
     def __str__(self):
         return self.title
 
-                        
+
+class Contact(models.Model):
+    model_required = models.CharField(max_length=100)
+    pickup_date = models.DateField()
+    return_date = models.DateField()
+    rental_type = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
+    whatsapp = models.CharField(max_length=20)
+    notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name + self.whatsapp
