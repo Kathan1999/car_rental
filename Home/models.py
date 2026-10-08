@@ -59,6 +59,9 @@ class Contact(models.Model):
     rental_type = models.CharField(max_length=50)
     name = models.CharField(max_length=100)
     whatsapp = models.CharField(max_length=20)
+    pickup_location = models.CharField(max_length=100)
+    return_location = models.CharField(max_length=100)
+    passengers = models.CharField(max_length=10)
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

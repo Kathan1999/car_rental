@@ -307,15 +307,18 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
         <p class="muted" style="margin-top:6px;">Select <b>Other Requirement</b> and tell us the car name/model you need — we'll check availability and get back with pricing.</p>
         <form id="otherForm" method="POST" action="/">
           {% csrf_token %}
-          <label>Car / Model Required</label><input required name="model" placeholder="e.g. Toyota Innova">
+          <label>Car / Model Required</label><input required name="model_required" placeholder="e.g. Toyota Innova">
           <div class="grid grid-2" style="gap:10px;">
-            <div><label>Pickup Date</label><input type="date" required name="pickup"></div>
-            <div><label>Return Date</label><input type="date" required name="return"></div>
+            <div><label>Pickup Date</label><input type="date" required name="pickup_date"></div>
+            <div><label>Return Date</label><input type="date" required name="return_date"></div>
           </div>
           <label>Rental Type</label>
-          <div class="radio-row"><label><input type="radio" name="type" value="Self-Drive" checked>Self-Drive</label><label><input type="radio" name="type" value="With Driver">With Driver</label></div>
+          <div class="radio-row"><label><input type="radio" name="rental_type" value="Self-Drive" checked>Self-Drive</label><label><input type="radio" name="rental_type" value="With Driver">With Driver</label></div>
           <label>Your Name</label><input required name="name">
           <label>WhatsApp Number</label><input required name="whatsapp" type="tel">
+          <label>Pickup Location</label><input required name="pickup_location" type="text">
+          <label>Pickup Location</label><input required name="return_location" type="text">
+          <label>Passengers</label><input required name="passengers" type="number">
           <label>Additional Requirements</label><textarea name="notes"></textarea>
           <button class="btn btn-gold" style="width:100%;margin-top:16px;">Send Inquiry</button>
         </form>
@@ -534,6 +537,56 @@ const navToggle = document.getElementById('navToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 navToggle.addEventListener('click', ()=>mobileMenu.classList.toggle('open'));
 mobileMenu.addEventListener('click', e=>{ if(e.target.tagName==='A') mobileMenu.classList.remove('open'); });
+
+document.getElementById("otherForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const form = this;
+
+    // Open a blank tab immediately so Safari doesn't block it
+    const whatsappWindow = window.open("", "_blank");
+
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch("/", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            // Refresh the current website
+            window.location.reload();
+
+            // Open WhatsApp in the new tab
+            if (whatsappWindow) {
+                whatsappWindow.location.href = data.whatsapp_url;
+            } else {
+                window.open(data.whatsapp_url, "_blank");
+            }
+
+        } else {
+            if (whatsappWindow) {
+                whatsappWindow.close();
+            }
+
+            alert("Something went wrong. Please try again.");
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        if (whatsappWindow) {
+            whatsappWindow.close();
+        }
+
+        alert("Unable to submit the inquiry. Please try again.");
+    }
+});
 </script>
 </body>
 </html>
