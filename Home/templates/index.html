@@ -144,6 +144,25 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
 .review-who{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);}
 .review-name{font-size:14px;font-weight:700;}
 .review-place{font-size:12px;color:var(--ink-soft);}
+
+/* ---- Festival offer strip (slim scrolling board, JS moves it left → right) ---- */
+.led-strip{background:#f4e7cb;border-top:1px solid #e2cd9f;border-bottom:1px solid #e2cd9f;overflow:hidden;position:relative;margin:10px 0 0;}
+.led-track{display:flex;width:max-content;will-change:transform;}
+.led-group{display:flex;flex-shrink:0;align-items:center;justify-content:space-around;min-width:100vw;}
+.led-item{font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-weight:700;font-size:14.5px;letter-spacing:.02em;white-space:nowrap;padding:11px 26px;color:#1c1c1c;}
+.led-item.hot{color:#8a5f23;}
+/* running bulb lights along the top and bottom edge */
+.led-chase{position:absolute;left:0;right:0;height:3px;z-index:2;pointer-events:none;
+  background:repeating-linear-gradient(90deg,#a9772f 0 6px,transparent 6px 14px);animation:chaseRight .7s linear infinite;}
+.led-chase.top{top:0;}
+.led-chase.bottom{bottom:0;animation-delay:-.35s;}
+@keyframes chaseRight{from{background-position-x:0;}to{background-position-x:14px;}}
+/* blinking highlights */
+.led-item.hot{animation:ledBlink 1.2s ease-in-out infinite;}
+@keyframes ledBlink{0%,100%{opacity:1;}50%{opacity:.6;}}
+/* little car that "drives" along with the text */
+.led-car{animation:carBounce .45s ease-in-out infinite alternate;}
+@keyframes carBounce{from{transform:translateY(0);}to{transform:translateY(-3px);}}
 </style>
 </head>
 <body>
@@ -173,6 +192,39 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
     </div>
     <div class="hero-modes">Self-Drive &nbsp;|&nbsp; With Driver &nbsp;|&nbsp; Flexible Rental Options</div>
   </section>
+
+  <!-- festival section code -->
+  <div class="led-strip" aria-label="Festival offer">
+    <span class="led-chase top"></span>
+    <span class="led-chase bottom"></span>
+    <div class="led-track">
+ 
+      <div class="led-group">
+        <span class="led-item led-car">🚗💨</span>
+        <span class="led-item hot">🎉 Festival Offer</span>
+        <span class="led-item">Special festive rates on selected cars</span>
+        <span class="led-item hot">✦</span>
+        <span class="led-item">Book now on WhatsApp 8401297667</span>
+        <span class="led-item hot">✦</span>
+        <span class="led-item">Limited cars available</span>
+      </div>
+ 
+      <!-- exact copy of the group above -->
+      <div class="led-group" aria-hidden="true">
+        <span class="led-item led-car">🚗💨</span>
+        <span class="led-item hot">🎉 Festival Offer</span>
+        <span class="led-item">Special festive rates on selected cars</span>
+        <span class="led-item hot">✦</span>
+        <span class="led-item">Book now on WhatsApp 8401297667</span>
+        <span class="led-item hot">✦</span>
+        <span class="led-item">Limited cars available</span>
+      </div>
+ 
+    </div>
+  </div>
+
+  <!-- festival section end -->
+   <br>
 
   <section class="wrap">
     <div class="section-head"><h2>Why Choose Samay Car Rental</h2></div>
@@ -361,39 +413,6 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
       <div class="step"><div class="n">6</div><div><h3>Payment & Documentation</h3><p>Advance payment and rental documentation are completed before the booking is confirmed.</p></div></div>
 
     </div>
-  </section>
-
-  <section class="wrap" id="book">
-    <div class="section-head"><h2>Request Your Car</h2></div>
-    <form class="card" id="bookingForm">
-      <label>Select Car</label>
-      <select name="car" id="carSelect">
-        <option>Suzuki Baleno</option><option>Suzuki Swift</option><option>Suzuki Dzire</option><option>Suzuki Ertiga</option><option>Mahindra Thar</option><option>Hyundai Verna</option><option>Other Requirement</option><option>Wedding / Event Car</option>
-      </select>
-      <label>Rental Type</label>
-      <div class="radio-row"><label><input type="radio" name="type" value="Self-Drive" checked>Self-Drive</label><label><input type="radio" name="type" value="With Driver">With Driver</label></div>
-      <div class="grid grid-2" style="gap:10px;">
-        <div><label>Pickup Date</label><input type="date" required name="pickupDate"></div>
-        <div><label>Pickup Time</label><input type="time" required name="pickupTime"></div>
-        <div><label>Return Date</label><input type="date" required name="returnDate"></div>
-        <div><label>Return Time</label><input type="time" required name="returnTime"></div>
-      </div>
-      <div class="grid grid-2" style="gap:10px;">
-        <div><label>Pickup Location</label><input required name="pickupLoc"></div>
-        <div><label>Return / Drop Location</label><input required name="returnLoc"></div>
-      </div>
-      <div class="grid grid-2" style="gap:10px;">
-        <div><label>Full Name</label><input required name="name"></div>
-        <div><label>WhatsApp Number</label><input required name="whatsapp" type="tel"></div>
-      </div>
-      <div class="grid grid-2" style="gap:10px;">
-        <div><label>Email</label><input type="email" name="email"></div>
-        <div><label>Number of Passengers</label><input type="number" min="1" name="passengers"></div>
-      </div>
-      <label>Additional Message</label><textarea name="notes"></textarea>
-      <div class="notice">Booking requests are not automatically confirmed. Vehicle availability will be manually checked by Samay Car Rental before final confirmation.</div>
-      <button class="btn btn-gold" style="width:100%;margin-top:16px;">Send Booking Request</button>
-    </form>
   </section>
 
   <section class="wrap" id="terms">
@@ -587,6 +606,31 @@ document.getElementById("otherForm").addEventListener("submit", async function(e
         alert("Unable to submit the inquiry. Please try again.");
     }
 });
+
+// ---- Festival strip: JS moves the text from left to right in a loop ----
+(function(){
+  const track = document.querySelector('.led-track');
+  if(!track) return;
+  const SPEED = 55;            // pixels per second — change this to run faster / slower
+  let x = null, last = null, paused = false;
+  const strip = track.parentElement;
+  strip.addEventListener('mouseenter', ()=>paused = true);
+  strip.addEventListener('mouseleave', ()=>paused = false);
+  strip.addEventListener('touchstart', ()=>paused = true, {passive:true});
+  strip.addEventListener('touchend', ()=>paused = false);
+  function step(t){
+    const w = track.firstElementChild.offsetWidth;   // width of one text group
+    if(x === null) x = -w;
+    if(last !== null && !paused){
+      x += SPEED * (t - last) / 1000;
+      if(x >= 0) x -= w;                              // seamless loop
+    }
+    last = t;
+    track.style.transform = 'translateX(' + x + 'px)';
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
 </script>
 </body>
 </html>
