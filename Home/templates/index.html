@@ -96,7 +96,7 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
 @keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
-.reveal.in{opacity:1;transform:translateY(0);}
+.reveal.in{opacity:1;transform:none;}
 .hero h1{animation:fadeUp .7s ease both;}
 .hero .tag{animation:fadeUp .7s .1s ease both;}
 .hero p.sub{animation:fadeUp .7s .2s ease both;}
@@ -163,6 +163,35 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
 /* little car that "drives" along with the text */
 .led-car{animation:carBounce .45s ease-in-out infinite alternate;}
 @keyframes carBounce{from{transform:translateY(0);}to{transform:translateY(-3px);}}
+
+/* ---- Gallery: category cards + popup photo slider (photos live in the HTML) ---- */
+.gcat-grid{display:grid;gap:14px;grid-template-columns:1fr;}
+@media(min-width:640px){.gcat-grid{grid-template-columns:repeat(3,1fr);}}
+.gcat{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);cursor:pointer;background:var(--panel);transition:transform .25s ease,box-shadow .25s ease;}
+.gcat:hover{transform:translateY(-4px);box-shadow:0 16px 30px -22px rgba(28,28,28,.4);}
+.gcat-photo{position:relative;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(150deg,#efe7d4,#d9c9a0);display:flex;align-items:center;justify-content:center;font-size:64px;transition:transform .4s ease;}
+.gcat-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.gcat:hover .gcat-photo{transform:scale(1.06);}
+.gcat-cap{position:absolute;left:0;right:0;bottom:0;padding:14px 16px;background:linear-gradient(0deg,rgba(28,28,28,.78),transparent);color:#fff;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;}
+.gcat-cap b{font-size:18px;} .gcat-cap span{font-size:12px;opacity:.9;}
+ 
+.gpopup{position:fixed;inset:0;background:rgba(20,18,14,.88);display:none;align-items:center;justify-content:center;z-index:200;padding:16px;}
+.gpopup.open{display:flex;animation:fadeUp .3s ease both;}
+.gbox{background:var(--panel);border-radius:16px;width:100%;max-width:640px;padding:16px;max-height:100%;overflow:auto;}
+.ghead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.ghead h3{font-size:18px;}
+.gclose{background:var(--paper);border:1px solid var(--line);border-radius:50%;width:36px;height:36px;font-size:20px;cursor:pointer;line-height:1;}
+.gview{position:relative;}
+/* the photo strip: swipe / scroll sideways. Every .gslide inside is one photo. */
+.gtrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;border-radius:12px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.gtrack::-webkit-scrollbar{display:none;}
+.gslide{flex:0 0 100%;scroll-snap-align:center;position:relative;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(150deg,#efe7d4,#d9c9a0);display:flex;align-items:center;justify-content:center;font-size:90px;}
+.gslide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.gcap{position:absolute;left:0;right:0;bottom:0;padding:12px 14px;background:linear-gradient(0deg,rgba(28,28,28,.75),transparent);color:#fff;font-size:14px;font-weight:600;}
+.gnav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.92);font-size:24px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:2;}
+.gnav.prev{left:10px;} .gnav.next{right:10px;}
+.gfoot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px;flex-wrap:wrap;}
+.ghint{font-size:12.5px;color:var(--ink-soft);}
 </style>
 </head>
 <body>
@@ -284,7 +313,7 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
         <div class="car-extra">
          {{cardescription.description}}
         </div>
-        <a class="btn btn-gold" href="#book" data-car="Suzuki Baleno" onclick="selectCar(this)">Request Booking</a>
+        <a class="btn btn-gold" href="#book" data-car="{{cardescription.title}}" onclick="selectCar(this)">Request Booking</a>
       </div>
       {% endfor %}
     </div>
@@ -292,18 +321,123 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
   <br>
 
   <section class="wrap reveal" id="gallery">
-    <div class="section-head"><h2>Our Cars — Photo Gallery</h2><p>A quick look at the fleet. Tap any photo to view larger.</p></div>
-    <div class="gallery-scroll" id="galleryScroll">
+    <div class="section-head"><h2>Our Cars — Photo Gallery</h2><p>Choose a category and tap it to browse more photos.</p></div>
+    <div class="gcat-grid">
+ 
+      <!-- =====================================================================
+           CATEGORY 1: SEDAN
+           1) The card (cover photo + title) — change src to your cover image.
+           2) The popup right below it — each <div class="gslide"> line is ONE photo.
+              TO ADD A PHOTO: copy one gslide line, paste it below the last one, change the src (and caption).
+              TO REMOVE A PHOTO: delete its gslide line.
+           ===================================================================== -->
+      <div class="gblock">
+ 
+        <div class="gcat" onclick="openGallery('g-sedan')">
+          <div class="gcat-photo">🚘<img src="images/sedan-cover.jpg" alt=""></div>
+          <div class="gcat-cap"><b>Sedan</b><span>View photos →</span></div>
+        </div>
 
-      <!-- ===== GALLERY ITEM 1 ===== -->
-      <!-- Replace the emoji div below with <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;"> to use a real photo -->
-      {% for gallery in gallerys %}
-      <div class="gallery-item">
-        <div class="gallery-photo"><img src="{{gallery.image.url}}" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div class="gallery-cap">{{gallery.title}}</div>
+        <div class="gpopup" id="g-sedan">
+          <div class="gbox">
+            <div class="ghead">
+              <h3>Sedan</h3>
+              <button class="gclose" onclick="closeGallery()" aria-label="Close">&times;</button>
+            </div>
+            <div class="gview">
+              <button class="gnav prev" onclick="gScroll(this,-1)" aria-label="Previous">&#8249;</button>
+              <button class="gnav next" onclick="gScroll(this,1)" aria-label="Next">&#8250;</button>
+              <div class="gtrack">
+              {% for sedan in sedans %}
+              <div class="gslide">🚘<img src="{{sedan.image.url}}" alt=""><span class="gcap">{{sedan.car_name}}</span></div>
+              {% endfor %}
+              </div>
+            </div>
+            <div class="gfoot">
+              <span class="ghint">Swipe or use the arrows for more photos</span>
+              <a class="btn btn-gold" href="#book" onclick="closeGallery()">Request Booking</a>
+            </div>
+          </div>
+        </div>
+ 
       </div>
-      {% endfor %}
-
+ 
+      <!-- =====================================================================
+           CATEGORY 2: LUXURY
+           1) The card (cover photo + title) — change src to your cover image.
+           2) The popup right below it — each <div class="gslide"> line is ONE photo.
+              TO ADD A PHOTO: copy one gslide line, paste it below the last one, change the src (and caption).
+              TO REMOVE A PHOTO: delete its gslide line.
+           ===================================================================== -->
+      <div class="gblock">
+ 
+        <div class="gcat" onclick="openGallery('g-luxury')">
+          <div class="gcat-photo">🏎️<img src="images/luxury-cover.jpg" alt=""></div>
+          <div class="gcat-cap"><b>Luxury</b><span>View photos →</span></div>
+        </div>
+ 
+        <div class="gpopup" id="g-luxury">
+          <div class="gbox">
+            <div class="ghead">
+              <h3>Luxury</h3>
+              <button class="gclose" onclick="closeGallery()" aria-label="Close">&times;</button>
+            </div>
+            <div class="gview">
+              <button class="gnav prev" onclick="gScroll(this,-1)" aria-label="Previous">&#8249;</button>
+              <button class="gnav next" onclick="gScroll(this,1)" aria-label="Next">&#8250;</button>
+              <div class="gtrack">
+              {% for luxury in luxurys %}
+              <div class="gslide">🏎️<img src="{{luxury.image.url}}" alt=""><span class="gcap">{{luxury.car_name}}</span></div>
+              {% endfor %}
+              </div>
+            </div>
+            <div class="gfoot">
+              <span class="ghint">Swipe or use the arrows for more photos</span>
+              <a class="btn btn-gold" href="#book" onclick="closeGallery()">Request Booking</a>
+            </div>
+          </div>
+        </div>
+ 
+      </div>
+ 
+      <!-- =====================================================================
+           CATEGORY 3: XUV'S
+           1) The card (cover photo + title) — change src to your cover image.
+           2) The popup right below it — each <div class="gslide"> line is ONE photo.
+              TO ADD A PHOTO: copy one gslide line, paste it below the last one, change the src (and caption).
+              TO REMOVE A PHOTO: delete its gslide line.
+           ===================================================================== -->
+      <div class="gblock">
+ 
+        <div class="gcat" onclick="openGallery('g-xuv')">
+          <div class="gcat-photo">🚙<img src="images/xuv-cover.jpg" alt=""></div>
+          <div class="gcat-cap"><b>XUV's</b><span>View photos →</span></div>
+        </div>
+ 
+        <div class="gpopup" id="g-xuv">
+          <div class="gbox">
+            <div class="ghead">
+              <h3>XUV's</h3>
+              <button class="gclose" onclick="closeGallery()" aria-label="Close">&times;</button>
+            </div>
+            <div class="gview">
+              <button class="gnav prev" onclick="gScroll(this,-1)" aria-label="Previous">&#8249;</button>
+              <button class="gnav next" onclick="gScroll(this,1)" aria-label="Next">&#8250;</button>
+              <div class="gtrack">
+              {% for xuv in xuvs%}
+              <div class="gslide">🚙<img src="{{xuv.image.url}}" alt=""><span class="gcap">{{xuv.car_name}}</span></div>
+              {% endfor %}
+              </div>
+            </div>
+            <div class="gfoot">
+              <span class="ghint">Swipe or use the arrows for more photos</span>
+              <a class="btn btn-gold" href="#book" onclick="closeGallery()">Request Booking</a>
+            </div>
+          </div>
+        </div>
+ 
+      </div>
+ 
     </div>
   </section>
   <br>
@@ -352,50 +486,6 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
   <br>
   <br>
 
-  <section class="wrap">
-    <div class="grid grid-2">
-      <div class="card">
-        <h3 style="font-size:17px;">Can't find the car you're looking for?</h3>
-        <p class="muted" style="margin-top:6px;">Select <b>Other Requirement</b> and tell us the car name/model you need — we'll check availability and get back with pricing.</p>
-        <form id="otherForm" method="POST" action="/">
-          {% csrf_token %}
-          <label>Car / Model Required</label><input required name="model_required" placeholder="e.g. Toyota Innova">
-          <div class="grid grid-2" style="gap:10px;">
-            <div><label>Pickup Date</label><input type="date" required name="pickup_date"></div>
-            <div><label>Return Date</label><input type="date" required name="return_date"></div>
-          </div>
-          <label>Rental Type</label>
-          <div class="radio-row"><label><input type="radio" name="rental_type" value="Self-Drive" checked>Self-Drive</label><label><input type="radio" name="rental_type" value="With Driver">With Driver</label></div>
-          <label>Your Name</label><input required name="name">
-          <label>WhatsApp Number</label><input required name="whatsapp" type="tel">
-          <label>Pickup Location</label><input required name="pickup_location" type="text">
-          <label>Pickup Location</label><input required name="return_location" type="text">
-          <label>Passengers</label><input required name="passengers" type="number">
-          <label>Additional Requirements</label><textarea name="notes"></textarea>
-          <button class="btn btn-gold" style="width:100%;margin-top:16px;">Send Inquiry</button>
-        </form>
-      </div>
-
-      <div class="card">
-        <h3 style="font-size:17px;">Cars for Weddings &amp; Special Events</h3>
-        <p class="muted" style="margin-top:6px;">Looking for a premium or special car for a wedding, reception or engagement? We have options beyond our regular fleet — shared directly on WhatsApp.</p>
-        <form id="weddingForm">
-          <label>Event Date</label><input type="date" required name="eventDate">
-          <label>Event Type</label>
-          <select name="eventType"><option>Wedding</option><option>Reception</option><option>Engagement</option><option>Other</option></select>
-          <label>Car Requirement</label><input required name="car" placeholder="e.g. Luxury sedan">
-          <label>With Driver</label>
-          <div class="radio-row"><label><input type="radio" name="withDriver" value="Yes" checked>Yes</label><label><input type="radio" name="withDriver" value="No">No</label></div>
-          <label>Customer Name</label><input required name="name">
-          <label>WhatsApp Number</label><input required name="whatsapp" type="tel">
-          <label>Location</label><input name="location">
-          <label>Additional Details</label><textarea name="notes"></textarea>
-          <button class="btn btn-gold" style="width:100%;margin-top:16px;">Send Inquiry</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
   <section class="wrap" id="how">
     <div class="section-head"><h2>How It Works</h2></div>
     <div class="steps" id="stepsList">
@@ -413,6 +503,39 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
       <div class="step"><div class="n">6</div><div><h3>Payment & Documentation</h3><p>Advance payment and rental documentation are completed before the booking is confirmed.</p></div></div>
 
     </div>
+  </section>
+
+  <section class="wrap" id="book">
+    <div class="section-head"><h2>Request Your Car</h2></div>
+    <form class="card" id="bookingForm">
+      <label>Select Car</label>
+      <select name="car" id="carSelect">
+        <option>Suzuki Baleno</option><option>Suzuki Swift</option><option>Suzuki Dzire</option><option>Suzuki Ertiga</option><option>Mahindra Thar</option><option>Hyundai Verna</option><option>Other Requirement</option><option>Wedding / Event Car</option>
+      </select>
+      <label>Rental Type</label>
+      <div class="radio-row"><label><input type="radio" name="type" value="Self-Drive" checked>Self-Drive</label><label><input type="radio" name="type" value="With Driver">With Driver</label></div>
+      <div class="grid grid-2" style="gap:10px;">
+        <div><label>Pickup Date</label><input type="date" required name="pickupDate"></div>
+        <div><label>Pickup Time</label><input type="time" required name="pickupTime"></div>
+        <div><label>Return Date</label><input type="date" required name="returnDate"></div>
+        <div><label>Return Time</label><input type="time" required name="returnTime"></div>
+      </div>
+      <div class="grid grid-2" style="gap:10px;">
+        <div><label>Pickup Location</label><input required name="pickupLoc"></div>
+        <div><label>Return / Drop Location</label><input required name="returnLoc"></div>
+      </div>
+      <div class="grid grid-2" style="gap:10px;">
+        <div><label>Full Name</label><input required name="name"></div>
+        <div><label>WhatsApp Number</label><input required name="whatsapp" type="tel"></div>
+      </div>
+      <div class="grid grid-2" style="gap:10px;">
+        <div><label>Email</label><input type="email" name="email"></div>
+        <div><label>Number of Passengers</label><input type="number" min="1" name="passengers"></div>
+      </div>
+      <label>Additional Message</label><textarea name="notes"></textarea>
+      <div class="notice">Booking requests are not automatically confirmed. Vehicle availability will be manually checked by Samay Car Rental before final confirmation.</div>
+      <button class="btn btn-gold" style="width:100%;margin-top:16px;">Send Booking Request</button>
+    </form>
   </section>
 
   <section class="wrap" id="terms">
@@ -528,11 +651,31 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:32px 0;font-size
 
 // Clicking "Request Booking" on a car card scrolls to the booking form
 // and pre-selects that car in the dropdown.
-function selectCar(link){
-  const carName = link.dataset.car;
-  const sel = document.getElementById('carSelect');
-  for(const o of sel.options){ if(carName.startsWith(o.value) || o.value.startsWith(carName)){ sel.value = o.value; break; } }
+
+function selectCar(link) {
+    const carName = link.dataset.car;
+    const carSelect = document.getElementById('carSelect');
+
+    // Find the matching car in the booking form dropdown
+    const matchingOption = Array.from(carSelect.options).find(
+        option => option.value.trim() === carName.trim()
+            || option.text.trim() === carName.trim()
+    );
+
+    if (matchingOption) {
+        carSelect.value = matchingOption.value;
+    } else {
+        // If the car is not listed, select Other Requirement
+        const otherOption = Array.from(carSelect.options).find(
+            option => option.text.trim() === 'Other Requirement'
+        );
+
+        if (otherOption) {
+            carSelect.value = otherOption.value;
+        }
+    }
 }
+
 
 // Gallery lightbox: opens a larger view of whichever photo was clicked.
 function openLightbox(photo, name){
@@ -557,54 +700,33 @@ const mobileMenu = document.getElementById('mobileMenu');
 navToggle.addEventListener('click', ()=>mobileMenu.classList.toggle('open'));
 mobileMenu.addEventListener('click', e=>{ if(e.target.tagName==='A') mobileMenu.classList.remove('open'); });
 
-document.getElementById("otherForm").addEventListener("submit", async function(event) {
-    event.preventDefault();
+// ---- Request Your Car form: opens WhatsApp with the filled-in details ----
+const WA = "918401297667"; // <-- change your WhatsApp number here
+function waLink(msg){ return `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`; }
+function val(form,name){ return form.querySelector(`[name="${name}"]`)?.value || ''; }
 
-    const form = this;
+document.getElementById('bookingForm').addEventListener('submit', e=>{
+  e.preventDefault(); const f = e.target;
+  const msg = `🚗 NEW BOOKING INQUIRY — SAMAY CAR RENTAL
 
-    // Open a blank tab immediately so Safari doesn't block it
-    const whatsappWindow = window.open("", "_blank");
+Customer Name: ${val(f,'name')}
+WhatsApp: ${val(f,'whatsapp')}
+Email: ${val(f,'email')}
 
-    const formData = new FormData(form);
+Car: ${val(f,'car')}
+Rental Type: ${val(f,'type')}
 
-    try {
-        const response = await fetch("/", {
-            method: "POST",
-            body: formData
-        });
+Pickup: ${val(f,'pickupDate')} ${val(f,'pickupTime')}
+Return: ${val(f,'returnDate')} ${val(f,'returnTime')}
 
-        const data = await response.json();
+Pickup Location: ${val(f,'pickupLoc')}
+Return Location: ${val(f,'returnLoc')}
+Passengers: ${val(f,'passengers')}
 
-        if (data.success) {
+Message: ${val(f,'notes')}
 
-            // Refresh the current website
-            window.location.reload();
-
-            // Open WhatsApp in the new tab
-            if (whatsappWindow) {
-                whatsappWindow.location.href = data.whatsapp_url;
-            } else {
-                window.open(data.whatsapp_url, "_blank");
-            }
-
-        } else {
-            if (whatsappWindow) {
-                whatsappWindow.close();
-            }
-
-            alert("Something went wrong. Please try again.");
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-        if (whatsappWindow) {
-            whatsappWindow.close();
-        }
-
-        alert("Unable to submit the inquiry. Please try again.");
-    }
+Status: Pending Availability Confirmation`;
+  window.open(waLink(msg), '_blank');
 });
 
 // ---- Festival strip: JS moves the text from left to right in a loop ----
@@ -631,6 +753,29 @@ document.getElementById("otherForm").addEventListener("submit", async function(e
   }
   requestAnimationFrame(step);
 })();
+
+// ---- Gallery popup: JS only opens/closes it and scrolls on arrow click. Photos are all in the HTML. ----
+function openGallery(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeGallery(){
+  document.querySelectorAll('.gpopup.open').forEach(p => p.classList.remove('open'));
+  document.body.style.overflow = '';
+}
+function gScroll(btn, dir){
+  const track = btn.parentElement.querySelector('.gtrack');
+  track.scrollBy({left: dir * track.clientWidth, behavior: 'smooth'});
+}
+// Design touch: if a photo file isn't there yet, hide the broken-image icon so the placeholder emoji shows cleanly.
+document.querySelectorAll('.gcat-photo img, .gslide img').forEach(img => {
+  const hide = () => { img.style.display = 'none'; };
+  img.addEventListener('error', hide);
+  if(img.complete && img.naturalWidth === 0) hide();
+});
+document.addEventListener('click', e => { if(e.target.classList.contains('gpopup')) closeGallery(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeGallery(); });
+ 
 </script>
 </body>
 </html>

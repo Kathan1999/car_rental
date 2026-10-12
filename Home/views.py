@@ -2,10 +2,12 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from Home.models import Review
 from Home.models import CarDescription
-from Home.models import Gallery
 from Home.models import PriceRange
 from Home.models import CarType
 from Home.models import Contact
+from Home.models import Sedan
+from Home.models import Luxury
+from Home.models import Xuv
 from urllib.parse import quote
 
 # Create your views here.
@@ -53,5 +55,7 @@ def index(request):
     priceranges = PriceRange.objects.all()
     cardescriptions = CarDescription.objects.all()
     reviews = Review.objects.all()
-    gallerys = Gallery.objects.all()
-    return render(request, 'index.html', {'reviews':reviews, 'cardescriptions':cardescriptions, 'gallerys':gallerys, 'priceranges':priceranges, 'cartypes':cartypes})
+    sedans = Sedan.objects.all()
+    luxurys = Luxury.objects.all()
+    xuvs = Xuv.objects.all()
+    return render(request, 'index.html', {'reviews':reviews, 'cardescriptions':cardescriptions,'priceranges':priceranges,'xuvs':xuvs,'luxurys':luxurys ,'sedans':sedans, 'cartypes':cartypes})

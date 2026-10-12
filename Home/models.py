@@ -25,13 +25,6 @@ class CarDescription(models.Model):
     def __str__(self):
         return self.title
 
-class Gallery(models.Model):
-    image = models.ImageField(upload_to='gallery/')
-    title = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
-
 class PriceRange(models.Model):
     total_hours = models.CharField(max_length=20)
     price_from = models.IntegerField(default=0)
@@ -67,3 +60,25 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name + self.whatsapp
+
+class Sedan(models.Model):
+    image = models.ImageField(upload_to='gallery/', blank=True, null=True)
+    title = models.CharField(max_length=10)
+    car_name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.car_name
+
+class Luxury(models.Model):
+    car_name = models.CharField(max_length=20)
+    image = models.ImageField(upload_to='gallery/', blank=True, null=True)
+
+    def __str__(self):
+        return self.car_name
+
+class Xuv(models.Model):
+    car_name = models.CharField(max_length=20)
+    image = models.ImageField(upload_to='gallery/', blank=True, null=True)
+
+    def __str__(self):
+        return self.car_name
